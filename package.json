@@ -1,0 +1,1 @@
+{"name":"board-game-tool-preview","private":true,"scripts":{"dev:test":"node server.cjs"}}
