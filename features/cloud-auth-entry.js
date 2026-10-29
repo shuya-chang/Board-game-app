@@ -4,7 +4,8 @@ const {createClient}=require('@supabase/supabase-js');
   const status=document.createElement('p');status.setAttribute('role','status');
   const login=document.createElement('button');login.type='button';login.className='secondary';login.textContent='使用 Google 登入';
   const logout=document.createElement('button');logout.type='button';logout.className='secondary';logout.textContent='登出雲端帳號';logout.hidden=true;
-  panel.append(status,login,logout);
+  const storageNotice=document.createElement('p');storageNotice.className='footnote';storageNotice.textContent='目前為功能預覽：收藏與租借資料尚未跨裝置同步，重新整理會還原。';
+  panel.append(status,login,logout,storageNotice);
   // Account controls stay independent from the in-memory preview identity until
   // the domain adapter is migrated. Never upload another person's preview data.
   document.querySelector('main .top').after(panel);

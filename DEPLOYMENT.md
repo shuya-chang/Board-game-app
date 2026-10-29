@@ -24,6 +24,8 @@
 
 按檔名順序套用 `supabase/migrations/`。測試使用的 `auth.users` 與角色模擬只存在於測試檔，**不要在 Supabase 執行測試的初始化 SQL**。
 
+使用者已在新建的桌遊專案執行 `supabase/setup.sql`，並提供成功結果與資料表清單截圖。這份檔案為七份 migrations 的一次性、單一 transaction 版本，不可在已完成初始化的專案重跑。已透過公開金鑰確認 Auth 設定可連線且 Google provider 啟用；尚未把真實帳號登入及雲端資料操作視為完成。
+
 目前資料表分開保存共用資料、個人公開收藏資訊、私人備註、私密借出預設金額、雙方租借資料、不可由使用者修改的事件紀錄與問題回報。其他團員只能取得有限的持有人投影，不能讀取租借金額或聯絡方式。共用資料後台修改要在同一個 transaction 先設定原因：
 
 ```sql
@@ -39,7 +41,7 @@ commit;
 
 在 Google Cloud 建立 Web OAuth 用戶端；redirect URI 使用該 Supabase 專案提供的 Auth callback URL。Client ID 與 Client secret 填在 Supabase 的 Google provider 設定，**不填進前端或 GitHub**。
 
-Supabase Auth 的 Site URL 使用 Netlify 正式網址；允許的 Redirect URLs 只加入實際使用的本機及正式網址。前端採 PKCE，登入後回到同來源首頁。目前登入元件只在建置版本載入，原始 `npm run dev:test` 是不帶雲端帳號的介面預覽。
+Supabase Auth 的 Site URL 使用 Netlify 正式網址；允許的 Redirect URLs 只加入實際使用的本機及正式網址。前端採 PKCE，登入後回到同來源首頁。本機伺服器會從 Git 忽略的 `.env.local` 讀取專案 URL 與公開金鑰，並載入建置好的登入元件；先執行 `npm run build` 再啟動本機服務即可。本機環境檔不發布到 Netlify。
 
 官方設定參考：[Supabase Google 登入](https://supabase.com/docs/guides/auth/social-sign-in/auth-google)、[PKCE](https://supabase.com/docs/guides/auth/sessions/pkce-flow)。
 
