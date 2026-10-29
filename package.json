@@ -1,1 +1,1 @@
-{"name":"board-game-tool-preview","private":true,"scripts":{"dev:test":"node server.cjs"}}
+{"name":"board-game-tool-preview","private":true,"engines":{"node":">=24"},"scripts":{"dev:test":"node server.cjs","build":"node scripts/sync-features.cjs && node scripts/build.cjs","test":"node scripts/test.cjs"},"dependencies":{"@supabase/supabase-js":"^2.118.0","esbuild":"^0.28.2"},"devDependencies":{"@electric-sql/pglite":"^0.5.13"}}

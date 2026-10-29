@@ -2,7 +2,7 @@
 
 繁體中文桌遊收藏、借用請求、桌遊團及空閒時間管理網站的互動原型。
 
-> 目前為本機介面原型：資料只保留在當次頁面記憶體，重新整理會還原。Google 登入、Supabase、BGG API 與真實跨使用者通知尚未接入。收藏圖片及評分為示意資料。
+> 目前畫面仍為本機原型：收藏、團體及時間表資料保留在當次頁面記憶體，重新整理會還原。已加入 Supabase／Google 登入的串接基礎、Netlify 部署設定及問題回報後端，但尚未完成真實服務設定與全站雲端資料切換。BGG 尚未開通。串接進度與設定見 [DEPLOYMENT.md](DEPLOYMENT.md)。
 
 ## Windows 本機啟動
 
@@ -12,7 +12,7 @@
 npm run dev:test
 ```
 
-瀏覽器開啟 http://127.0.0.1:5173 。停止服務按 Ctrl+C。無需額外安裝 npm 套件；也可直接以瀏覽器開啟 index.html。
+瀏覽器開啟 http://127.0.0.1:5173 。停止服務按 Ctrl+C。原型預覽不需 npm 套件；建置或完整測試先執行 `npm ci`，再執行 `npm run build` 或 `npm test`。
 
 ## 目前可操作的原型
 
@@ -33,8 +33,8 @@ npm run dev:test
 ## 尚待實作
 
 - React + TypeScript 模組化正式專案。
-- Supabase PostgreSQL、SQL migrations、真正的資料擁有權／團內角色 RLS 與跨裝置儲存。
-- Google OAuth、跨帳號請求與通知、完整借出歷史、備份恢復。
+- 將已準備的 Supabase migrations／RLS 套用到指定專案，並把既有畫面完整改用雲端資料。
+- Google OAuth 真實服務設定、跨帳號與跨裝置驗證、備份恢復。
 - BGG API 連線、錯誤處理、節流與匯入。
 - 正式部署與正式權限測試。
 

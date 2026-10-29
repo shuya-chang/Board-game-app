@@ -1,0 +1,20 @@
+const assert=require('node:assert/strict');
+const config=require('../netlify/functions/public-config.cjs').handler;
+const bgg=require('../netlify/functions/bgg.cjs').handler;
+const feedback=require('../netlify/functions/feedback.cjs').handler;
+(async()=>{
+  process.env.SUPABASE_SERVICE_ROLE_KEY='secret-test-value';
+  process.env.BGG_ACCESS_TOKEN='secret-bgg-test';
+  process.env.DISCORD_REPORT_WEBHOOK_URL='secret-discord-test';
+  process.env.SUPABASE_PUBLISHABLE_KEY='sb_secret_do-not-publish';
+  const publicResult=await config();
+  assert(!publicResult.body.includes('secret-'));
+  assert.equal(JSON.parse(publicResult.body).bggEnabled,false);
+  assert.equal(JSON.parse(publicResult.body).supabasePublishableKey,'');
+  assert.equal((await bgg()).statusCode,503);
+  assert.equal((await feedback({httpMethod:'GET'})).statusCode,405);
+  process.env.SUPABASE_URL='https://example.supabase.co';
+  assert.equal((await feedback({httpMethod:'POST',headers:{}})).statusCode,401);
+  assert.equal((await feedback({httpMethod:'POST',headers:{authorization:'Bearer test'},body:'{}'})).statusCode,400);
+  console.log('Cloud boundaries: 7 checks passed');
+})().catch(error=>{console.error(error);process.exitCode=1;});
